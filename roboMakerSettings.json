@@ -1,0 +1,121 @@
+{
+  "runConfigurations": [
+    {
+      "id": "1aaa273a-25b9-0b00-774e-74c007c4e759",
+      "name": "Rover Build",
+      "type": "colcon build",
+      "cfg": {
+        "workingDir": "/rc_car_robomaker/robot_ws",
+        "cmdArgs": ""
+      }
+    },
+    {
+      "id": "9fc110d3-3f17-0d09-b729-219ad4d689c6",
+      "name": "Simulation Build",
+      "type": "colcon build",
+      "cfg": {
+        "workingDir": "/rc_car_robomaker/simulation_ws",
+        "cmdArgs": ""
+      }
+    },
+    {
+      "id": "7d90f090-405c-cc0e-e69f-5ddf71476e9b",
+      "name": "Rover Bundle",
+      "type": "colcon bundle",
+      "cfg": {
+        "workingDir": "/rc_car_robomaker/robot_ws",
+        "cmdArgs": ""
+      }
+    },
+    {
+      "id": "2146613c-31ec-7e31-8f46-9d0fb2bdd6c1",
+      "name": "Simulation Bundle",
+      "type": "colcon bundle",
+      "cfg": {
+        "workingDir": "/rc_car_robomaker/simulation_ws",
+        "cmdArgs": ""
+      }
+    },
+    {
+      "id": "d18e163d-e882-aeb1-bb6f-e51f01d988ea",
+      "name": "Build and Bundle Rover",
+      "type": "workflow",
+      "runCfgIds": [
+        "1aaa273a-25b9-0b00-774e-74c007c4e759",
+        "7d90f090-405c-cc0e-e69f-5ddf71476e9b"
+      ]
+    },
+    {
+      "id": "facf2dc9-f2fa-0c8b-561b-82ae3f2197fb",
+      "name": "Build and Bundle Simulation",
+      "type": "workflow",
+      "runCfgIds": [
+        "9fc110d3-3f17-0d09-b729-219ad4d689c6",
+        "2146613c-31ec-7e31-8f46-9d0fb2bdd6c1"
+      ]
+    },
+    {
+      "id": "62b6f5c0-20a8-c70d-4782-a0d217887595",
+      "name": "Build and Bundle All",
+      "type": "workflow",
+      "runCfgIds": [
+        "1aaa273a-25b9-0b00-774e-74c007c4e759",
+        "9fc110d3-3f17-0d09-b729-219ad4d689c6",
+        "7d90f090-405c-cc0e-e69f-5ddf71476e9b",
+        "2146613c-31ec-7e31-8f46-9d0fb2bdd6c1"
+      ]
+    },
+    {
+      "id": "5418f5ab-e040-1ebc-1225-c04b77b29d6b",
+      "name": "Run Simulation",
+      "type": "simulation",
+      "cfg": {
+        "simulation": {
+          "maxJobDurationInSeconds": 3600,
+          "failureBehavior": "Fail",
+          "iamRole": "arn:aws:iam::351954413779:role/service-role/robomaker_role",
+          "outputLocation": "rover-robomaker-sim",
+          "tags": {}
+        },
+        "simulationApp": {
+          "name": "rover_sim",
+          "sourceBundleFile": "/rc_car_robomaker/simulation_ws/bundle/output.tar",
+          "architecture": "X86_64",
+          "s3Bucket": "rover-robomaker-sim",
+          "launchConfig": {
+            "packageName": "rover_gazebo",
+            "launchFile": "rc_robomaker.lauch",
+            "environmentVariables": {}
+          },
+          "simulationSoftwareSuite": {
+            "name": "Gazebo",
+            "version": "9"
+          },
+          "renderingEngine": {
+            "name": "OGRE",
+            "version": "1.x"
+          },
+          "robotSoftwareSuite": {
+            "name": "ROS",
+            "version": "Melodic"
+          }
+        },
+        "robotApp": {
+          "name": "rover_app",
+          "sourceBundleFile": "/rc_car_robomaker/robot_ws/bundle/output.tar",
+          "s3Bucket": "rover-robomaker-app",
+          "architecture": "X86_64",
+          "launchConfig": {
+            "packageName": "rover_teleop",
+            "launchFile": "rover_robomaker.launch",
+            "environmentVariables": {}
+          },
+          "robotSoftwareSuite": {
+            "name": "ROS",
+            "version": "Melodic"
+          }
+        }
+      }
+    }
+  ]
+}
