@@ -2,8 +2,6 @@
 <launch>
   <arg name="world_name" default="willowgarage" />
   <arg name="gui" default="true" />
-  <arg name="record" default="false" />
-  <arg name="web_app" default="false" />
   <arg name="rviz" default="false" />
   <arg name="x" default="0.0"/>
   <arg name="y" default="0.0"/>
@@ -29,26 +27,6 @@
 
  <!-- Given the published joint states, publish tf for the robot links -->
  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
-
-  <!-- Load Keybaord/Joystick node  
-  <include file="$(find rover_teleop)/launch/rover_robomaker.launch"/> 
-  -->
-
-  <!-- Load Rover Control information
-  <include file="$(find rover_control)/launch/rc_control_gazebo.launch"/> 
-  -->
-
-  <!-- Record data  -->
-  <node pkg="rosbag" type="record" name="rosbag_record_all"
-    args="-a -o $(find rover_gazebo)/data/rc_walker"
-    if="$(arg record)" /> 
-
-  <!-- Run the Web App Support Nodes-->
-  <group if="$(arg web_app)">
-    <include file="$(find rosbridge_server)/launch/rosbridge_websocket.launch"/>
-    <node respawn="true" pkg="web_video_server" type="web_video_server" name="web_video_server" />
-    <node respawn="true" pkg="tf2_web_republisher" type="tf2_web_republisher" name="tf2_web_republisher" />
-  </group>
 
   <!-- Load RVIZ -->
   <node if="$(arg rviz)" name="rviz_teb" pkg="rviz" type="rviz" args="-d $(find rover_gazebo)/rviz/rc_model.rviz" />

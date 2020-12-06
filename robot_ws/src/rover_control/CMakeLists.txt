@@ -12,6 +12,7 @@ find_package(catkin REQUIRED COMPONENTS
   nodelet
   rospy
   yocs_cmd_vel_mux
+  ackermann_msgs
 )
 
 ## System dependencies are found with CMake's conventions
@@ -158,12 +159,13 @@ include_directories(
 # all install targets should use catkin DESTINATION variables
 # See http://ros.org/doc/api/catkin/html/adv_user_guide/variables.html
 
+
 ## Mark executable scripts (Python etc.) for installation
-## in contrast to setup.py, you can choose the destination
-# install(PROGRAMS
-#   scripts/my_python_script
-#   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
-# )
+install(PROGRAMS
+  scripts/servo_commands.py
+  scripts/keyboard_teleop.py
+  DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+)
 
 ## Mark executables and/or libraries for installation
 # install(TARGETS ${PROJECT_NAME} ${PROJECT_NAME}_node

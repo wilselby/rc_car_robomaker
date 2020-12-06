@@ -106,8 +106,8 @@
           "s3Bucket": "rover-robomaker-app",
           "architecture": "X86_64",
           "launchConfig": {
-            "packageName": "rover_teleop",
-            "launchFile": "rover_robomaker.launch",
+            "packageName": "rover_control",
+            "launchFile": "rc_control_gazebo_robomaker.launch",
             "environmentVariables": {}
           },
           "robotSoftwareSuite": {
