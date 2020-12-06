@@ -1,0 +1,16 @@
+/robot_ws/bundle/*
+/robot_ws/build/*
+/robot_ws/install/*
+/robot_ws/log/*
+/simulation_ws/build/*
+/simulation_ws/bundle/*
+/simulation_ws/install/*
+/simulation_ws/log/*
+*.bag
+*~
+*.pyc
+*.swp
+*.bak
+*.hdf5
+*.h5
+*.tar.gz

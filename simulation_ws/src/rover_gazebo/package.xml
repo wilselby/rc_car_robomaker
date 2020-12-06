@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<package>
+  <name>rover_gazebo</name>
+  <version>0.0.0</version>
+  <description>Simulation Package for a DIY Driverless Vehicle based on the ClearPath Robotics Husky Vehicle</description>
+
+  <license>BSD</license>
+
+  <maintainer email="wil@wilselby.com">Wil Selby</maintainer>
+
+  <buildtool_depend>catkin</buildtool_depend>
+  <build_depend>roscpp</build_depend>
+  <build_depend>rospy</build_depend>
+  <build_depend>std_msgs</build_depend>
+
+  <run_depend>gazebo_ros</run_depend>
+  <run_depend>gazebo_ros_control</run_depend>
+  <run_depend>gazebo_plugins</run_depend>
+  <run_depend>rover_description</run_depend>
+  <run_depend>ros_control</run_depend>
+  <run_depend>ros_controllers</run_depend>
+  <run_depend>joint_state_controller</run_depend>
+  <run_depend>joint_state_publisher</run_depend>
+  <run_depend>robot_state_publisher</run_depend>
+  <run_depend>rosbag</run_depend>
+  <run_depend>teleop_twist_keyboard</run_depend>
+  <run_depend>rviz</run_depend>
+
+  <run_depend>rosbridge_server</run_depend>
+  <run_depend>web_video_server</run_depend>
+  <run_depend>tf2_web_republisher</run_depend>
+
+  <run_depend>image_transport</run_depend>
+  <run_depend>compressed_image_transport</run_depend>
+
+  <run_depend>urdf</run_depend>
+  <run_depend>xacro</run_depend>
+
+  <!--
+  <run_depend>rover_teleop</run_depend>
+  <run_depend>rover_control</run_depend>
+  -->
+
+  <export>
+  </export>
+
+</package>

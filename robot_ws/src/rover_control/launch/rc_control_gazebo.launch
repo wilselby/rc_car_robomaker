@@ -1,0 +1,73 @@
+<?xml version="1.0"?>
+<!--
+Software License Agreement (BSD)
+
+\file      rc_control_gazebo.launch
+\authors   Wil Selby <accounts@wilselby.com>
+\copyright Copyright (c) 2017, All rights reserved.
+
+Redistribution and use in source and binary forms, with or without modification, are permitted provided that
+the following conditions are met:
+ * Redistributions of source code must retain the above copyright notice, this list of conditions and the
+   following disclaimer.
+ * Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the
+   following disclaimer in the documentation and/or other materials provided with the distribution.
+ * The name of the contributors may not be used to endorse or promote products derived from this software 
+   without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WAR-
+RANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, IN-
+DIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT
+OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+-->
+
+<launch>
+
+  <!-- Load joint controller configurations from YAML file to parameter server -->
+  <rosparam file="$(find rover_control)/config/racecar_control.yaml" command="load"/>
+
+  <!-- load the controllers -->
+  <node name="controller_manager" pkg="controller_manager" type="spawner" respawn="false"
+        output="screen" ns="/racecar" args="left_rear_wheel_velocity_controller right_rear_wheel_velocity_controller left_front_wheel_velocity_controller right_front_wheel_velocity_controller left_steering_hinge_position_controller right_steering_hinge_position_controller joint_state_controller"/>
+
+  <!-- servo node -->
+  <node pkg="rover_control" type="servo_commands.py" name="servo_commands" output="screen" />
+
+  <!-- EKF node -->
+  <node pkg="robot_localization" type="ekf_localization_node" name="ekf_localization">
+    <rosparam command="load" file="$(find rover_control)/config/rc_localization.yaml" />
+  </node>
+
+  <node pkg="robot_localization" type="navsat_transform_node" name="navsat_transform_node" respawn="true" output="screen">
+    <remap from="/gps/fix" to="/navsat/fix_raw"/>
+    <remap from="/imu/data" to="/os1_cloud_node/imu"/>
+    <param name="frequency" value="30"/>
+    <param name="magnetic_declination_radians" value="0"/>
+    <param name="yaw_offset" value="1.5707"/>
+    <param name="zero_altitude" value="false"/>
+    <param name="broadcast_utm_transform" value="false"/>
+    <param name="publish_filtered_gps" value="false"/>
+    <param name="wait_for_datum" value="false"/>
+    <param name="use_odometry_yaw" value="false"/>
+  </node>
+  
+  
+
+  <!-- transform these vel msgs to robot commands via the twist2ack node -->
+  <node name="twist2ack" pkg="rbcar_twist2ack" type="twist2ack.py" respawn="true" output="screen"/>
+  
+  <!-- Command Mux -->
+  <node pkg="nodelet" type="nodelet" name="cmd_vel_mux" args="manager" />
+  <include file="$(find yocs_cmd_vel_mux)/launch/cmd_vel_mux.launch">
+    <arg name="nodelet_manager_name" value="cmd_vel_mux" />
+    <arg name="config_file" value="$(find rover_control)/config/rover_cmd_vel_mux.yaml" />
+  </include>
+
+  <!-- Remap to from mux output to servo input -->
+  <remap from="/racecar/ackermann_cmd_mux/output" to="/rover_velocity_controller/cmd_ack"/>
+
+
+</launch>
