@@ -36,4 +36,20 @@ include_directories(
   ${catkin_INCLUDE_DIRS}
 )
 
+#############
+## Install ##
+#############
+
+# all install targets should use catkin DESTINATION variables
+# See http://ros.org/doc/api/catkin/html/adv_user_guide/variables.html
+
+## Mark executable scripts (Python etc.) for installation
+install(PROGRAMS
+  src/rbcar_twist2ack/twist2ack.py
+  DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+)
+
+install(DIRECTORY src
+    DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
+)
 
