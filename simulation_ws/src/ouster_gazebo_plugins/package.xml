@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<package format="2">
+<package>
   <name>ouster_gazebo_plugins</name>
   <version>1.0.7</version>
   <description>
@@ -7,18 +7,36 @@
   </description>
 
   <license>BSD</license>
-  <author>Kevin Hallenbeck</author>
-  <maintainer email="khallenbeck@dataspeedinc.com">Kevin Hallenbeck</maintainer>
-  <url type="website">http://wiki.ros.org/velodyne_gazebo_plugins</url>
-  <url type="repository">https://bitbucket.org/dataspeedinc/velodyne_simulator</url>
-  <url type="bugtracker">https://bitbucket.org/dataspeedinc/velodyne_simulator/issues</url>
+  <author>Wil Selby</author>
+  <maintainer email="accounts@wilselby.com">Wil Selby</maintainer>
 
   <buildtool_depend>catkin</buildtool_depend>
+  
+  <build_depend>roscpp</build_depend>
+  <build_depend>rospy</build_depend>
+  <build_depend>std_msgs</build_depend>
+  <build_depend>sensor_msgs</build_depend>
+  <build_depend>gazebo_ros</build_depend>
+  <build_depend>gazebo_plugins</build_depend>
+  
+  <run_depend>gazebo_ros</run_depend>
+  <run_depend>roscpp</run_depend>
+  <run_depend>tf</run_depend>
+  <run_depend>gazebo_ros_control</run_depend>
+  <run_depend>gazebo_plugins</run_depend>
+  <run_depend>sensor_msgs</run_depend>
+  <run_depend>geometry_msgs</run_depend>
+  <run_depend>sensor_msgs</run_depend>
+  <run_depend>ros_control</run_depend>
+  <run_depend>ros_controllers</run_depend>
+  <run_depend>robot_state_publisher</run_depend>
+  <run_depend>joint_state_publisher</run_depend>
+  <run_depend>joint_state_controller</run_depend>
+  <run_depend>rviz</run_depend>
 
-  <depend>roscpp</depend>
-  <depend>sensor_msgs</depend>
-  <depend>tf</depend>
-  <depend>gazebo_ros</depend>
+  <run_depend>urdf</run_depend>
+  <run_depend>xacro</run_depend>
+
 
   <export>
   </export>
