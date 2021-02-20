@@ -49,6 +49,8 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSI
   <!-- Remap to from mux output to servo input 
   <remap from="/racecar/ackermann_cmd_mux/output" to="/rover_velocity_controller/cmd_ack"/>
   -->
-
+  
+  <!-- Cloud Monitoring -->
+  <include file="$(find rover_monitor/launch/monitor.launch)" />
 
 </launch>
