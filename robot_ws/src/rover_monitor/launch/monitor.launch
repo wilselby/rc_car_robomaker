@@ -36,9 +36,9 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSI
   -->
   
   
-  <!-- Report speed metrics to CloudWatch 
-  <node pkg="cloudwatch_robot" type="monitor_speed.py" name="monitor_speed" output="log"/>
-  -->
+  <!-- Report speed metrics to CloudWatch -->
+  <node pkg="rover_monitor" type="monitor_speed.py" name="monitor_speed" output="log"/>
+  
   
   <!-- Report distance to nearest obstacle metric to CloudWatch 
   <node pkg="cloudwatch_robot" type="monitor_obstacle_distance.py" name="monitor_obstacle_distance" output="log"/>
