@@ -1,6 +1,9 @@
 cmake_minimum_required(VERSION 2.8.3)
 project(ouster_gazebo_plugins)
 
+cmake_policy(SET CMP0054 OLD)
+cmake_policy(SET CMP0045 OLD)
+
 find_package(catkin REQUIRED COMPONENTS
   roscpp
   sensor_msgs
